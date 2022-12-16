@@ -20,6 +20,8 @@ const galleryMarkup = galleryItems
 gallery.innerHTML = galleryMarkup;
 gallery.addEventListener('click', openModalImage)
 
+let selectedImage;
+let modalImage;
 
 function openModalImage(event) {
     event.preventDefault();
@@ -28,14 +30,17 @@ function openModalImage(event) {
         return;
     }
 
-    const selectedImage = event.target.getAttribute('data-source');
-    const modalImage = basicLightbox
+     selectedImage = event.target.getAttribute('data-source');
+     modalImage = basicLightbox
         .create(`<img src="${selectedImage}" width="800" height="600">`);
 
     modalImage.show()
 
-    gallery.addEventListener('keydown', (event) => {
+    document.addEventListener('keydown', onEscapeButtonPress, {once: true})
+}
+
+function onEscapeButtonPress(event) {
     if (event.key === 'Escape') {
-		modalImage.close()
-    }})
+        modalImage.close()
+    }
 }
