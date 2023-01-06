@@ -31,12 +31,12 @@ function openModalImage(event) {
     }
 
      selectedImage = event.target.getAttribute('data-source');
-     modalImage = basicLightbox
-        .create(`<img src="${selectedImage}" width="800" height="600">`);
+     modalImage = basicLightbox.create(`<img src="${selectedImage}" width="800" height="600">`, {
+	onShow: (instance) => {document.addEventListener('keydown', onEscapeButtonPress)},
+	onClose: (instance) => {document.removeEventListener('keydown', onEscapeButtonPress)}
+});
 
     modalImage.show()
-
-    document.addEventListener('keydown', onEscapeButtonPress, {once: true})
 }
 
 function onEscapeButtonPress(event) {
